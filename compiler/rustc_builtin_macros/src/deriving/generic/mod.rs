@@ -1516,7 +1516,11 @@ impl<'a> TraitDef<'a> {
                 .map(|prefix| {
                     let ident = self.mk_pattern_ident(prefix, i);
                     let expr = cx.expr_path(cx.path_ident(sp, ident));
-                    if addr_of { cx.expr_addr_of(sp, expr) } else { expr }
+                    if addr_of {
+                        cx.expr_addr_of(sp, expr)
+                    } else {
+                        expr
+                    }
                 })
                 .collect()
         })

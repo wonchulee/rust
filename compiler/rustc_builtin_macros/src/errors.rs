@@ -216,3 +216,142 @@ pub(crate) struct AsmUnderscoreForInputOperands {
     #[primary_span]
     pub(crate) span: Span,
 }
+
+#[derive(SessionDiagnostic)]
+#[diag(builtin_macros::boolean_expression_required)]
+pub struct BooleanExpressionRequired {
+    #[primary_span]
+    pub span: Span,
+}
+
+// let mut err = cx.struct_span_err(parser.token.span, "unexpected string literal");
+// let comma_span = parser.prev_token.span.shrink_to_hi();
+// err.span_suggestion_short(
+//     comma_span,
+//     "try adding a comma",
+//     ", ",
+//     Applicability::MaybeIncorrect,
+// );
+
+// FIXME:
+#[derive(SessionDiagnostic)]
+#[diag(builtin_macros::unexpected_string_literal)]
+pub struct UnexpectedStringLiteral {
+    #[primary_span]
+    pub span: Span,
+}
+
+#[derive(SessionDiagnostic)]
+#[diag(builtin_macros::argument_expression_required)]
+pub struct ArgumentExpressionRequired {
+    #[primary_span]
+    #[suggestion(code = "", applicability = "maybe-incorrect")]
+    pub span: Span,
+}
+
+// Some([]) => ecx.span_err(mi.span, "`cfg_accessible` path is not specified"),
+#[derive(SessionDiagnostic)]
+#[diag(builtin_macros::not_specified)]
+pub struct NotSpecified {
+    #[primary_span]
+    pub span: Span,
+}
+
+//ecx.span_err(l.span(), "multiple `cfg_accessible` paths are specified");
+#[derive(SessionDiagnostic)]
+#[diag(builtin_macros::multiple_paths_specified)]
+pub struct MultiplePathsSpecified {
+    #[primary_span]
+    pub span: Span,
+}
+
+// None => ecx.span_err(nmi.span(), "`cfg_accessible` path cannot be a literal"),
+#[derive(SessionDiagnostic)]
+#[diag(builtin_macros::unallowed_literal_path)]
+pub struct UnallowedLiteralPath {
+    #[primary_span]
+    pub span: Span,
+}
+
+//         ecx.span_err(mi.span, "`cfg_accessible` path cannot accept arguments");
+#[derive(SessionDiagnostic)]
+#[diag(builtin_macros::unaccepted_arguments)]
+pub struct UnacceptedArguments {
+    #[primary_span]
+    pub span: Span,
+}
+
+//ecx.span_err(span, "cannot determine whether the path is accessible or not");
+#[derive(SessionDiagnostic)]
+#[diag(builtin_macros::nondeterministic_access)]
+pub struct NondeterministicAccess {
+    #[primary_span]
+    pub span: Span,
+}
+
+#[derive(SessionDiagnostic)]
+#[diag(builtin_macros::compile_error)]
+pub struct CompileError {
+    #[primary_span]
+    pub span: Span,
+    pub msg: String,
+}
+
+// cx.span_err(e.span, "cannot concatenate a byte string literal");
+#[derive(SessionDiagnostic)]
+#[diag(builtin_macros::byte_string_literal_concatenate)]
+pub struct ByteStringLiteralConcatenate {
+    #[primary_span]
+    pub span: Span,
+}
+
+// let mut err = cx.struct_span_err(missing_literal, "expected a literal");
+// err.note("only literals (like `\"foo\"`, `42` and `3.14`) can be passed to `concat!()`");
+#[derive(SessionDiagnostic)]
+#[diag(builtin_macros::missing_literal)]
+#[note]
+pub struct MissingLiteral {
+    #[primary_span]
+    pub span: Span,
+}
+
+// let mut err = cx.create_err(expr.span, "cannot concatenate character literals");
+//             if let Ok(snippet) = cx.sess.source_map().span_to_snippet(expr.span) {
+//                 err.span_suggestion(
+//                     expr.span,
+//                     "try using a byte character",
+//                     format!("b{}", snippet),
+//                     Applicability::MachineApplicable,
+//                 )
+//                 .emit();
+//             }
+#[derive(SessionDiagnostic)]
+#[diag(builtin_macros::character_literals_concatenate)]
+pub struct CharacterLiteralsConcatenate {
+    #[primary_span]
+    #[suggestion(code = "{snippet}", applicability = "machine-applicable")]
+    pub span: Span,
+    pub snippet: Option<String>,
+}
+
+// let mut err = cx.struct_span_err(expr.span, "cannot concatenate string literals");
+//             // suggestion would be invalid if we are nested
+//             if !is_nested {
+//                 if let Ok(snippet) = cx.sess.source_map().span_to_snippet(expr.span) {
+//                     err.span_suggestion(
+//                         expr.span,
+//                         "try using a byte string",
+//                         format!("b{}", snippet),
+//                         Applicability::MachineApplicable,
+//                     );
+//                 }
+//             }
+
+#[derive(SessionDiagnostic)]
+#[diag(builtin_macros::string_literals_concatenate)]
+pub struct StringLiteralsConcatenate {
+    #[primary_span]
+    #[suggestion(code = "{snippet}", applicability = "machine-applicable")]
+    pub span: Span,
+    pub snippet: Option<String>,
+}

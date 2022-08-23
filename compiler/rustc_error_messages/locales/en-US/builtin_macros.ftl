@@ -91,3 +91,42 @@ builtin_macros_requires_cfg_pattern =
     .label = cfg-pattern required
 
 builtin_macros_expected_one_cfg_pattern = expected 1 cfg-pattern
+
+builtin_macros_boolean_expression_required =
+    macro requires a boolean expression as an argument
+    .label = boolean expression required
+
+builtin_macros_unexpected_string_literal = unexpected string literal
+
+builtin_macros_argument_expression_required =
+    macro requires an expression as an argument
+    .suggestion = try removing semicolon
+
+builtin_macros_not_specified =
+    `cfg_accessible` path is not specified
+
+builtin_macros_multiple_paths_specified =
+    multiple `cfg_accessible` paths are specified
+
+builtin_macros_unallowed_literal_path =
+    `cfg_accessible` path cannot be a literal
+
+builtin_macros_unaccepted_arguments =
+    `cfg_accessible` path cannot accept arguments
+
+builtin_macros_nondeterministic_access =
+    cannot determine whether the path is accessible or not
+
+builtin_macros_compile_error = {$msg}
+
+builtin_macros_byte_string_literal_concatenate =
+    cannot concatenate a byte string literal
+
+builtin_macros_missing_literal = expected a literal
+    .note = only literals (like `\"foo\"`, `42` and `3.14`) can be passed to `concat!()`
+
+builtin_macros_character_literals_concatenate = cannot concatenate character literals
+    .suggestion = try using a byte character
+
+builtin_macros_string_literals_concatenate = cannot concatenate string literals
+    .suggestion = try using a byte string

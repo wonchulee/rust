@@ -3,6 +3,8 @@ use rustc_ast::{ptr::P, tokenstream::TokenStream};
 use rustc_errors::Applicability;
 use rustc_expand::base::{self, DummyResult};
 
+use crate::errors::{CharacterLiteralsConcatenate, StringLiteralsConcatenate};
+
 /// Emits errors for literal expressions that are invalid inside and outside of an array.
 fn invalid_type_err(cx: &mut base::ExtCtxt<'_>, expr: &P<rustc_ast::Expr>, is_nested: bool) {
     let ast::ExprKind::Lit(lit) = &expr.kind else {
@@ -10,28 +12,20 @@ fn invalid_type_err(cx: &mut base::ExtCtxt<'_>, expr: &P<rustc_ast::Expr>, is_ne
     };
     match lit.kind {
         ast::LitKind::Char(_) => {
-            let mut err = cx.struct_span_err(expr.span, "cannot concatenate character literals");
+            let mut err =
+                cx.create_err(CharacterLiteralsConcatenate { span: expr.span, snippet: None });
             if let Ok(snippet) = cx.sess.source_map().span_to_snippet(expr.span) {
-                err.span_suggestion(
-                    expr.span,
-                    "try using a byte character",
-                    format!("b{}", snippet),
-                    Applicability::MachineApplicable,
-                )
-                .emit();
+                err.snippet = snippet;
             }
+            err.emit();
         }
         ast::LitKind::Str(_, _) => {
-            let mut err = cx.struct_span_err(expr.span, "cannot concatenate string literals");
+            let mut err =
+                cx.create_err(StringLiteralsConcatenate { span: expr.span, snippet: None });
             // suggestion would be invalid if we are nested
             if !is_nested {
                 if let Ok(snippet) = cx.sess.source_map().span_to_snippet(expr.span) {
-                    err.span_suggestion(
-                        expr.span,
-                        "try using a byte string",
-                        format!("b{}", snippet),
-                        Applicability::MachineApplicable,
-                    );
+                    err.snippet = snippet;
                 }
             }
             err.emit();
