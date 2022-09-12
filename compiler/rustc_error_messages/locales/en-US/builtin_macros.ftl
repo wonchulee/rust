@@ -10,8 +10,7 @@ builtin_macros_asm_args_after_options =
 
 builtin_macros_asm_args_named_after_explicit_register =
     named arguments cannot follow explicit register arguments
-    .label = named argument
-    .register_label = explicit register argument
+    .label = named argument .register_label = explicit register argument
 
 builtin_macros_asm_args_positional_after_named_or_explicit_register =
     positional arguments cannot follow named arguments or explicit register arguments
@@ -126,7 +125,89 @@ builtin_macros_missing_literal = expected a literal
     .note = only literals (like `\"foo\"`, `42` and `3.14`) can be passed to `concat!()`
 
 builtin_macros_character_literals_concatenate = cannot concatenate character literals
-    .suggestion = try using a byte character
 
 builtin_macros_string_literals_concatenate = cannot concatenate string literals
-    .suggestion = try using a byte string
+
+builtin_macros_use_byte_character = try using a byte character
+
+builtin_macros_use_byte_string = try using a byte string
+
+builtin_macros_float_literals_concatenate = cannot concatenate float literals
+
+builtin_macros_boolean_literals_concatenate = cannot concatenate boolean literals
+
+builtin_macros_wrap_number_in_array = try wrapping the number in an array
+
+builtin_macros_numeric_literals_concatenate = cannot concatenate numeric literals
+
+builtin_macros_out_of_bound_numeric_literal = numeric literal is out of bounds
+
+builtin_macros_invalid_numeric_literal = numeric literal is not a `u8`
+
+builtin_macros_doubly_nested_array_concatenate = cannot concatenate doubly nested array
+    .note = byte strings are treated as arrays of bytes
+    .help = try flattening the array
+
+builtin_macros_invalid_repeat_count = repeat count is not a positive number
+
+builtin_macros_byte_literal_expected = expected a byte literal
+    .note = only byte literals (like `b\"foo\"`, `b's'`, and `[3, 4, 5]`) can be passed to `concat_bytes!()`
+
+builtin_macros_missing_arguments = concat_idents! takes 1 or more arguments
+
+builtin_macros_comma_expected = concat_idents! expecting comma
+
+builtin_macros_ident_args_required = concat_idents! requires ident args
+
+builtin_macros_not_applicable_derive =
+    `derive` may only be applied to `struct`s, `enum`s and `union`s
+    .label = not applicable here
+    .item_label = not a `struct`, `enum` or `union`
+
+builtin_macros_trait_path_expected =
+    expected path to a trait, found literal
+    .label = not a trait
+    .help = {$help_msg}
+
+builtin_macros_path_rejected = {$title}
+    .suggestion = {$action}
+
+builtin_macros_no_default = no default declared
+    .help = make a unit variant default by placing `#[default]` above it
+
+builtin_macros_variant_suggestion = make `{$ident}` default
+
+builtin_macros_multiple_declared_defaults_first = = first default
+
+builtin_macros_multiple_declared_defaults_additional = additional default
+
+builtin_macros_multiple_declared_defaults = multiple declared defaults
+    .note = only one variant can be default
+
+builtin_macros_default_not_allowed = the `#[default]` attribute may only be used on unit enum variants
+    .help = consider a manual implementation of `Default`
+
+builtin_macros_default_non_exhaustive = default variant must be exhaustive
+    .help = consider a manual implementation of `Default`
+
+builtin_macros_default_non_exhaustive_instruction = declared `#[non_exhaustive]` here
+
+builtin_macros_multiple_default_attributes_first = `#[default]` used here
+
+builtin_macros_multiple_default_attributes_rest = `#[default]` used again here
+
+builtin_macros_multiple_default_attributes_suggestion_text = {$suggestion_text}
+
+builtin_macros_multiple_default_attributes = multiple `#[default]` attributes
+    .note = only one `#[default]` attribute is needed
+
+builtin_macros_default_not_accept_value = `#[default]` attribute does not accept a value
+    .suggestion = try using `#[default]`
+
+builtin_macros_unallowed_derive = `derive` cannot be used on items with type macros
+
+builtin_macros_cannot_be_derived_unions = this trait cannot be derived for unions
+
+builtin_macros_empty_argument = env! takes 1 or 2 arguments
+
+builtin_macros_env_expand_error = {$msg}
